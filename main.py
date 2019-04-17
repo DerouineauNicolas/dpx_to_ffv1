@@ -50,7 +50,10 @@ def main():
     num_scan, offset = fileutils.parse_directory(input)
     print("Num scan = %d" % num_scan)
     print("offset = %d" % offset)
-    encode.encode_dpx_scans(input, output, num_scan, offset, fps)
+    if(encode.is_ffmpeg_available()==True):
+        encode.encode_dpx_scans(input, output, num_scan, offset, fps)
+    else:
+        print_error("ffmpeg is not installed")
 
 if __name__ == "__main__":
     main()
