@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys, os, fnmatch,  getopt
-import fileutils
+import src.fileutils as fileutils
+import src.encode as encode
 
 
 def usage():
@@ -13,45 +14,6 @@ def print_error(error_message):
     usage()
     sys.exit()
 
-def parse_directory(path):
-    num_scan = None
-    offset = None
-    name = None
-    metadata = {}
-    metadata[path] = {}
-    meta = metadata[path]
-    for files in os.listdir(path):  
-        if fnmatch.fnmatch(files, "*.dpx"):
-            print(files)
-            # Ignore files that don't contains index
-            try:
-                name, index = fileutils.parse_name(files)
-                print(name)
-                print(index)
-                # This is the first file for that sequence, initialize metadata
-                # dictionary with default values and perform a file based probe.
-                if name not in meta:
-                    #probe = probe_mediainfo(fullpath)['Probe']
-                    #probe.pop('CompleteName', None)
-
-                    meta[name] = {
-                        #'Folder': dirpath,
-                        #'Extension': ext,
-                        'Count': 1,
-                        'StartIndex': 0,
-                        'EndIndex': 0,
-                        #'Probe': probe
-                    }
-                    # Already know this sequence, simply accumulating files
-                else:
-                    meta[name]['Count'] += 1
-                    meta[name]['StartIndex'] = min(index, meta[name]['StartIndex'])
-                    meta[name]['EndIndex'] = max(index, meta[name]['EndIndex'])
-            except ValueError:
-                continue
-
-    return meta[name]['Count'], meta[name]['StartIndex']
-
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hop:v", ["help", "output=", "input="])
@@ -61,6 +23,8 @@ def main():
     output = None
     input = None
     verbose = False
+    fps = 24
+
     for o, a in opts:
         if o == "-v":
             verbose = True
@@ -83,10 +47,10 @@ def main():
     if output is None:
         print_error("No Output was given")
     
-    num_scan, offset = parse_directory(input)
-    print(num_scan)
-    print(offset)
-    #encode_dpx_scans(path, output, num_scan, offset, fps)
+    num_scan, offset = fileutils.parse_directory(input)
+    print("Num scan = %d" % num_scan)
+    print("offset = %d" % offset)
+    encode.encode_dpx_scans(input, output, num_scan, offset, fps)
 
 if __name__ == "__main__":
     main()
