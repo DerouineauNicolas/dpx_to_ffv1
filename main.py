@@ -2,31 +2,53 @@
 import sys, os, fnmatch,  getopt
 
 
-def usage():
-    print("coucou")
+def usage(prog):
+    print("%s is a simple program to convert a set of dpx to ffv1 codec" % prog)
+    print("Expected usage:")
+    print("%s path=/home/user/dpxdirectory/ output=/home/user/ffv1out.mkv"% prog)
 
-def encode_dpx_scans(path, output, fps=24):
+def parse_directory(path):
     for entry in listOfFiles:  
         if fnmatch.fnmatch(entry, pattern):
             print(entry)
 
-def main(argv):
+def main():
     try:
-        opts, args = getopt.getopt(argv, "h:p:o", ["help", "path=", "output="])
-    except getopt.GetoptError:
+        opts, args = getopt.getopt(sys.argv[1:], "hop:v", ["help", "output=", "input="])
+    except getopt.GetoptError as err:
+        # print help information and exit:
+        print(err)  # will print something like "option -a not recognized"
         usage()
         sys.exit(2)
-
-    for opt, arg in opts:
-        if opt in ("-h", "--help"):
-            usage()
+    output = None
+    input = None
+    verbose = False
+    for o, a in opts:
+        if o == "-v":
+            verbose = True
+        elif o in ("-h", "--help"):
+            usage(sys.argv[0])
             sys.exit()
-        elif opt in ("-p", "--path"):
-            path = arg
-            print("path is %s"%path)
-        elif opt in ("-o", "--output"):
-            output = arg
+        elif o in ("-o", "--output"):
+            output = a
+            print("output is %s " % output)
+        elif o in ("-i", "--input"):
+            input = a
+            print("path is %s " % path)
+        else:
+            assert False, "unhandled option"
+    
+    if input is None:
+        print("No input was given")
+        usage(sys.argv[0])
+        sys.exit()
+    if output is None:
+        print("No Output was given")
+        usage(sys.argv[0])
+        sys.exit()
+    
+    num_scan, offset = parse_directory()
+    #encode_dpx_scans(path, output, num_scan, offset, fps)
 
 if __name__ == "__main__":
-    # execute only if run as a script
-    main(sys.argv[])
+    main()
