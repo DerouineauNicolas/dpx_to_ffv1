@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import sys, os, fnmatch,  getopt
+import fileutils
 
 
 def usage():
     print("%s is a simple program to convert a set of dpx to ffv1 codec" % sys.argv[0])
     print("Expected usage:")
-    print("%s --input=/home/user/dpxdirectory/ --output=/home/user/ffv1out.mkv "% sys.argv[0])
+    print("%s --input=./test/ --output=ffv1out.mkv "% sys.argv[0])
 
 def print_error(error_message):
     print(error_message)
@@ -13,9 +14,43 @@ def print_error(error_message):
     sys.exit()
 
 def parse_directory(path):
-    for entry in listOfFiles:  
-        if fnmatch.fnmatch(entry, pattern):
-            print(entry)
+    num_scan = None
+    offset = None
+    name = None
+    metadata = {}
+    metadata[path] = {}
+    meta = metadata[path]
+    for files in os.listdir(path):  
+        if fnmatch.fnmatch(files, "*.dpx"):
+            print(files)
+            # Ignore files that don't contains index
+            try:
+                name, index = fileutils.parse_name(files)
+                print(name)
+                print(index)
+                # This is the first file for that sequence, initialize metadata
+                # dictionary with default values and perform a file based probe.
+                if name not in meta:
+                    #probe = probe_mediainfo(fullpath)['Probe']
+                    #probe.pop('CompleteName', None)
+
+                    meta[name] = {
+                        #'Folder': dirpath,
+                        #'Extension': ext,
+                        'Count': 1,
+                        'StartIndex': 0,
+                        'EndIndex': 0,
+                        #'Probe': probe
+                    }
+                    # Already know this sequence, simply accumulating files
+                else:
+                    meta[name]['Count'] += 1
+                    meta[name]['StartIndex'] = min(index, meta[name]['StartIndex'])
+                    meta[name]['EndIndex'] = max(index, meta[name]['EndIndex'])
+            except ValueError:
+                continue
+
+    return meta[name]['Count'], meta[name]['StartIndex']
 
 def main():
     try:
@@ -48,7 +83,9 @@ def main():
     if output is None:
         print_error("No Output was given")
     
-    #num_scan, offset = parse_directory(path)
+    num_scan, offset = parse_directory(input)
+    print(num_scan)
+    print(offset)
     #encode_dpx_scans(path, output, num_scan, offset, fps)
 
 if __name__ == "__main__":
