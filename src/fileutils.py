@@ -4,18 +4,16 @@ import re, os, fnmatch
 def parse_directory(path):
     num_scan = None
     offset = None
+    num_decimal = None
     name = None
     metadata = {}
     metadata[path] = {}
     meta = metadata[path]
     for files in os.listdir(path):
         if fnmatch.fnmatch(files, "*.dpx"):
-            print(files)
             # Ignore files that don't contains index
             try:
-                name, index = parse_name(files)
-                print(name)
-                print(index)
+                name, index, num_decimal = parse_name(files)
                 # This is the first file for that sequence, initialize metadata
                 # dictionary with default values and perform a file based probe.
                 if name not in meta:
@@ -39,7 +37,7 @@ def parse_directory(path):
             except ValueError:
                 continue
 
-    return meta[name]['Count'], meta[name]['StartIndex']
+    return meta[name]['Count'], meta[name]['StartIndex'], num_decimal
 
 
 IMAGENO_REGEX = re.compile(r'[\._]?(?P<Index>\d+)(?=[\._])')
@@ -53,7 +51,7 @@ def parse_name(filename, regex=IMAGENO_REGEX):
             regex (RegexObject): Extraction rule.
 
         Returns:
-            Tuple (name, index) extracted from filename.
+            List (name, index, num_inde_decimal) extracted from filename.
 
         Raises:
             ValueError: If image index not found in ``filename``.
@@ -78,11 +76,14 @@ def parse_name(filename, regex=IMAGENO_REGEX):
         ValueError: myfile.abcdef.tiff : image index not found
 
     """
-    m = list(regex.finditer(filename))
+    reit = regex.finditer(filename)
+    m = list(reit)
     if m == []:
         raise ValueError('{} : image index not found'.format(filename))
+
+    num_decimal = len(m[0].group(1))
 
     lastm = m[-1]
     name = filename[:lastm.start()]
     index = lastm.groupdict()['Index']
-    return name, int(index)
+    return name, int(index), num_decimal

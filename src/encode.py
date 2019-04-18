@@ -7,13 +7,14 @@ def is_ffmpeg_available():
 
     return which("ffmpeg") is not None
 
-def encode_dpx_scans(path, output, num_scan, offset, fps, num_decimal=3):
+def encode_dpx_scans(path, output, num_scan, offset, fps, num_decimal):
     print("Encoding is starting")
     print(path)
     print(output)
     print(num_scan)
     print(offset)
     print(fps)
+    print(num_decimal)
 
     # Ref command for ffv1 encoding
     #ffmpeg -y -framerate 24 -start_number 12487 
