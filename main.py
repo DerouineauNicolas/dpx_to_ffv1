@@ -7,7 +7,7 @@ import src.encode as encode
 def usage():
     print("%s is a simple program to convert a set of dpx to ffv1 codec" % sys.argv[0])
     print("Expected usage:")
-    print("%s --input=./test/ --output=ffv1out.mkv "% sys.argv[0])
+    print("%s --input=./test/ --output=ffv1out.mkv " % sys.argv[0])
 
 def print_error(error_message):
     print(error_message)
@@ -48,7 +48,6 @@ def main():
         print_error("No Output was given")
     
     num_scan, offset, num_decimal = fileutils.parse_directory(input)
-    print(num_decimal)
 
     if(encode.is_ffmpeg_available()==True):
         encode.encode_dpx_scans(input, output, num_scan, offset, fps, num_decimal)
