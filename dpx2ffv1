@@ -47,10 +47,20 @@ def main():
     if output is None:
         print_error("No Output was given")
     
-    num_scan, offset, num_decimal = fileutils.parse_directory(input)
+    num_scan, offset, num_decimal, prefix = fileutils.parse_directory(input)
 
     if(encode.is_ffmpeg_available()==True):
-        encode.encode_dpx_scans(input, output, num_scan, offset, fps, num_decimal)
+        try:
+            ret = encode.encode_dpx_scans(input, output, num_scan, offset, fps, num_decimal, prefix)
+            if ret < 0:
+                print("Something went wrong")
+                sys.exit(-1)
+            else:
+                print("Encoding is finished")
+        except Exception:
+            print("Something went wrong")
+            sys.exit(-1)
+        
     else:
         print_error("ffmpeg is not installed")
 

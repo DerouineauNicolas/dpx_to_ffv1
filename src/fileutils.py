@@ -37,7 +37,7 @@ def parse_directory(path):
             except ValueError:
                 continue
 
-    return meta[name]['Count'], meta[name]['StartIndex'], num_decimal
+    return meta[name]['Count'], meta[name]['StartIndex'], num_decimal, name
 
 
 IMAGENO_REGEX = re.compile(r'[\._]?(?P<Index>\d+)(?=[\._])')
