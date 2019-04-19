@@ -4,6 +4,11 @@ dpx2ffv1
 This program takes a folder filled with dpx indexed images as an input and encode them as a unique ffv1/mkv binary.
 The program detects if the indexed image have an offset and a prefix (see test folder for an example)
 
+Requirements
+-------------------
+
+ffmpeg binary should be available on your system.
+
 Install (System wide)
 -------------------
 
