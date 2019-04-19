@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.5"
+  - "3.6"
+  # PyPy versions
+  - "pypy3.5"
+# command to install dependencies
+before_install:
+  - sudo add-apt-repository ppa:mc3man/trusty-media && sudo apt-get update && sudo apt-get install -y ffmpeg
+install:
+  - python3 setup.py install
+# command to run tests
+script: 
+  - python3 -m unittest

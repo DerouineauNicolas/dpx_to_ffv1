@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/DerouineauNicolas/dpx_to_ffv1.svg?branch=master)](https://travis-ci.com/DerouineauNicolas/dpx_to_ffv1)
+
 dpx2ffv1
 ===================
 
