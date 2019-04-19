@@ -6,6 +6,8 @@ def usage():
     print("dpx2ffv1 is a simple module to convert a set of dpx to ffv1 codec")
     print("Expected usage:")
     print("python3 -m dpx2ffv1 --input=./test/ --output=ffv1out.mkv ")
+    print("or")
+    print("dpx2ffv1 --input=./test/ --output=ffv1out.mkv ")
 
 def print_error(error_message):
     print(error_message)
