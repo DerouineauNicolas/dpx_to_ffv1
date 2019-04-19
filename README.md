@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.com/DerouineauNicolas/dpx_to_ffv1.svg?branch=master)](https://travis-ci.com/DerouineauNicolas/dpx_to_ffv1)
 
+[![PyPI version](https://badge.fury.io/py/dpx2ffv1.svg)](https://badge.fury.io/py/dpx2ffv1)
+
 dpx2ffv1
 ===================
 
