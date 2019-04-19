@@ -1,21 +1,13 @@
 language: python
 python:
-  - "3.5"
-  - "3.6"
-  # PyPy versions
-  - "pypy3.5"
-# command to install dependencies
-before_install:
-  - cd /usr/local/bin
-  - mkdir ffmpeg
-  - cd ffmpeg
-  - wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
-  - tar xf ffmpeg-release-64bit-static.tar.xz
-  - mv * ../
-  - ln -s /usr/local/bin/ffmpeg/ffmpeg /usr/bin/ffmpeg
-  - ln -s /usr/local/bin/ffmpeg/ffprobe /usr/bin/ffprobe
+    - 3.6.2
+
+services:
+    - docker
+    - docker-compose
+  
 install:
-  - python3 setup.py install
-# command to run tests
-script: 
-  - python3 -m unittest
+    - docker build .
+
+script:
+    - docker-compose run --rm dpx2ffv1 python3 -m unittest

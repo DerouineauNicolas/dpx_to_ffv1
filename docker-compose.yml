@@ -1,0 +1,10 @@
+version: '2'
+
+volumes:
+  dbvolume:
+  ipython:
+  static_volume:
+
+services:
+  dpx2ffv1:
+    build: .
