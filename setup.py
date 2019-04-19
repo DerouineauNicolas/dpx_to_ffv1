@@ -5,6 +5,6 @@ with open("README.md", "r") as fh:
 
 setup(
     name='dpx2ffv1',
-    package_dir={'dpx2ffv1': 'src'},
+    package_dir={'dpx2ffv1': 'dpx2ffv1'},
     packages=find_packages(),
-    entry_points={ 'console_scripts': ['Package = src.__main__:main' ] })
+    entry_points={ 'console_scripts': ['Package = dpx2ffv1.__main__:main' ] })

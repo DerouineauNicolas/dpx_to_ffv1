@@ -1,2 +1,15 @@
-Simple DPX to ffv1 mkv encoder
+dpx2ffv1
+===================
 
+This program takes a folder filled with dpx indexed images as an input and encode them as a unique ffv1/mkv binary.
+The program detects if the indexed image have an offset and a prefix (see test folder for an example)
+
+Install (System wide)
+-------------------
+
+python3 setup.py install
+
+Run 
+-------------------
+
+python3 -m dpx2ffv1 --input=./testdpx/ --output=ffv1out.mkv

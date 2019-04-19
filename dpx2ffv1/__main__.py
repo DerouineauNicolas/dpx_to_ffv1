@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import sys, os, fnmatch,  getopt
-import src.fileutils as fileutils
-import src.encode as encode
-
+from dpx2ffv1.fileutils import parse_directory 
+from dpx2ffv1.encode import is_ffmpeg_available, encode_dpx_scans 
 
 def usage():
-    print("%s is a simple program to convert a set of dpx to ffv1 codec" % sys.argv[0])
+    print("dpx2ffv1 is a simple module to convert a set of dpx to ffv1 codec")
     print("Expected usage:")
-    print("%s --input=./test/ --output=ffv1out.mkv " % sys.argv[0])
+    print("python3 -m dpx2ffv1 --input=./test/ --output=ffv1out.mkv ")
 
 def print_error(error_message):
     print(error_message)
@@ -47,11 +46,11 @@ def main():
     if output is None:
         print_error("No Output was given")
     
-    num_scan, offset, num_decimal, prefix = fileutils.parse_directory(input)
+    num_scan, offset, num_decimal, prefix = parse_directory(input)
 
-    if(encode.is_ffmpeg_available()==True):
+    if(is_ffmpeg_available()==True):
         try:
-            ret = encode.encode_dpx_scans(input, output, num_scan, offset, fps, num_decimal, prefix)
+            ret = encode_dpx_scans(input, output, num_scan, offset, fps, num_decimal, prefix)
             if ret < 0:
                 print("Something went wrong")
                 sys.exit(-1)

@@ -1,0 +1,16 @@
+*~
+*.log
+*.pyc
+.*.swp
+.*.swo
+.DS_Store
+
+tests/resources/
+build*/
+dist
+dpx2ffv1.egg-info/
+__pycache__
+.pybuild
+.coverage
+.mypy_cache/
+.vscode/
