@@ -1,8 +1,12 @@
 from dpx2ffv1.fileutils import parse_directory 
 from dpx2ffv1.encode import is_ffmpeg_available, encode_dpx_scans 
+from dpx2ffv1.info import __version__
+
+import pkg_resources
 import sys
 
 def usage():
+    print("dpx2ffv1 v"+str(__version__))
     print("dpx2ffv1 is a simple module to convert a set of dpx to ffv1 codec")
     print("Expected usage:")
     print("python3 -m dpx2ffv1 --input=./test/ --output=ffv1out.mkv ")
