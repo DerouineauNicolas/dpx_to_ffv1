@@ -7,7 +7,7 @@ setup(
     name='dpx2ffv1',
     description='dpx2ffv1 is a simple module to convert a set of dpx to ffv1 codec',
     long_description=long_description_s,
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/DerouineauNicolas/dpx_to_ffv1',
     author='N. DEROUINEAU',
     author_email='nicolas.derouineau@ymagis.com',

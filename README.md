@@ -17,6 +17,8 @@ Install (System wide)
 
 python3 setup.py install
 
+
+
 Run 
 -------------------
 
@@ -25,3 +27,10 @@ python3 -m dpx2ffv1 --input=./testdpx/ --output=ffv1out.mkv
 or
 
 dpx2ffv1 --input=./testdpx/ --output=ffv1out.mkv
+
+Generate Dist and upload 
+-------------------
+
+python3 setup.py sdist bdist_wheel
+
+python3.7 -m twine upload dist/*
